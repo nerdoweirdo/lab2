@@ -22,7 +22,6 @@ def grayscale(Path):
 
 def thresholded(Path, arr):
     arr[arr < 100] = 0
-    count = np.unique(arr)
     new_img_th = Image.fromarray(arr)
     Path = Path.replace("Lena.png", 'Lena_thresholded.png')
     new_img_th.save(Path)
