@@ -63,6 +63,8 @@ def ranking(data):
 if __name__ == '__main__':
     Path = input("Input path to the file: ")
     flag = True
+    if (os.path.exists(Path) == False):
+        print("File does not exist.\n")
     if re.search(r'\.csv$', Path):
         flag = True
     else:
@@ -75,14 +77,6 @@ if __name__ == '__main__':
                 flag = True
             else:
                 flag = False
-    if (os.path.exists(Path) == False):
-        flag = False
-        while (flag == False):
-            print("File does not exist.\n")
-            Path = ''
-            Path = input("Try again: ")
-            if (os.path.exists(Path) == True):
-                flag = True
     global data
     data = pd.read_csv(Path, sep=',')
     genInfo(data)

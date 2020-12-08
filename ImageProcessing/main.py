@@ -22,7 +22,6 @@ def grayscale(Path):
 
 def thresholded(Path, arr):
     arr[arr < 100] = 0
-    count = np.unique(arr)
     new_img_th = Image.fromarray(arr)
     Path = Path.replace("Lena.png", 'Lena_thresholded.png')
     new_img_th.save(Path)
@@ -50,14 +49,6 @@ if __name__ == '__main__':
                 flag = True
             else:
                 flag = False
-    if (os.path.exists(Path) == False):
-        flag = False
-        while (flag == False):
-            print("File does not exist.\n")
-            Path = ''
-            Path = input("Try again: ")
-            if (os.path.exists(Path) == True):
-                flag = True
     grayscale(Path, arr)
     thresholded(Path, arr)
     histogram(arr)
