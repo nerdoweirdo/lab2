@@ -13,31 +13,29 @@ def grayscale(Path):
     print("G:\nmax = " + str(g.max()) + "; min = " + str(g.min()) + "; average = " + str(g.mean()))
     b = img_arr[:, :, 2]
     print("B:\nmax = " + str(b.max()) + "; min = " + str(b.min()) + "; average = " + str(b.mean()))
+    global arr
     arr = (img_arr * np.array([0.299, 0.587, 0.114])).astype('uint8')
     arr = np.uint8(np.apply_along_axis(sum, 2, arr))
     new_img = Image.fromarray(arr)
     Path = Path.replace("Lena.png", 'Lena_grayscaled.png')
     new_img.save(Path)
-    thresholded(arr, Path)
 
-def thresholded(arr, Path):
+def thresholded(Path, arr):
     arr[arr < 100] = 0
     count = np.unique(arr)
     new_img_th = Image.fromarray(arr)
-    Path = Path.replace("Lena_grayscaled.png", 'Lena_thresholded.png')
+    Path = Path.replace("Lena.png", 'Lena_thresholded.png')
     new_img_th.save(Path)
-    histogram(arr)
 
 def histogram(arr):
     ax = plt.subplot()
     ax.set_xlabel("Brightness")
-    ax.set_ylabel("Pixels")
+    ax.set_ylabel("Amount of pixels")
     ax.hist(arr)
     plt.title("Brightness distribution histogram")
     plt.show()
 
 if __name__ == '__main__':
-    global Path
     Path = input("Input path to the file: ")
     flag = True
     if re.search(r'\.png$', Path):
@@ -60,4 +58,6 @@ if __name__ == '__main__':
             Path = input("Try again: ")
             if (os.path.exists(Path) == True):
                 flag = True
-    grayscale(Path)
+    grayscale(Path, arr)
+    thresholded(Path, arr)
+    histogram(arr)
