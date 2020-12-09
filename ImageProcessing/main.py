@@ -15,16 +15,10 @@ def grayscale(Path):
     print("B:\nmax = " + str(b.max()) + "; min = " + str(b.min()) + "; average = " + str(b.mean()))
     arr = (img_arr * np.array([0.299, 0.587, 0.114])).astype('uint8')
     arr = np.uint8(np.apply_along_axis(sum, 2, arr))
-    new_img = Image.fromarray(arr)
-    Path = Path.replace("Lena.png", 'Lena_grayscaled.png')
-    new_img.save(Path)
     return arr
 
-def thresholded(Path, arr):
+def thresholded(arr):
     arr[arr < 100] = 0
-    new_img_th = Image.fromarray(arr)
-    Path = Path.replace("Lena.png", 'Lena_thresholded.png')
-    new_img_th.save(Path)
     return arr
 
 def histogram(arr):
@@ -51,5 +45,11 @@ if __name__ == '__main__':
             else:
                 flag = False
     arr = grayscale(Path)
-    arr = thresholded(Path, arr)
+    Path = Path.replace("Lena.png", 'Lena_grayscaled.png')
+    new_img = Image.fromarray(arr)
+    new_img.save(Path)
+    arr = thresholded(arr)
+    Path = Path.replace("Lena_grayscaled.png", 'Lena_thresholded.png')
+    new_img_th = Image.fromarray(arr)
+    new_img_th.save(Path)
     histogram(arr)
