@@ -32,24 +32,27 @@ def histogram(arr):
 if __name__ == '__main__':
     Path = input("Input path to the file: ")
     flag = True
-    if re.search(r'\.png$', Path):
-        flag = True
+    if (os.path.exists(Path) == False):
+        print("File does not exist.\n")
     else:
-        flag = False
-        while (flag == False):
-            print("Incorrect extension.\n")
-            Path = ''
-            Path = input("Try again: ")
-            if re.search(r'\.png$', Path):
-                flag = True
-            else:
-                flag = False
-    arr = grayscale(Path)
-    Path = Path.replace("Lena.png", 'Lena_grayscaled.png')
-    new_img = Image.fromarray(arr)
-    new_img.save(Path)
-    arr = thresholded(arr)
-    Path = Path.replace("Lena_grayscaled.png", 'Lena_thresholded.png')
-    new_img_th = Image.fromarray(arr)
-    new_img_th.save(Path)
-    histogram(arr)
+        if re.search(r'\.png$', Path):
+            flag = True
+        else:
+            flag = False
+            while (flag == False):
+                print("Incorrect extension.\n")
+                Path = ''
+                Path = input("Try again: ")
+                if re.search(r'\.png$', Path):
+                    flag = True
+                else:
+                    flag = False
+        arr = grayscale(Path)
+        Path = Path.replace("Lena.png", 'Lena_grayscaled.png')
+        new_img = Image.fromarray(arr)
+        new_img.save(Path)
+        arr = thresholded(arr)
+        Path = Path.replace("Lena_grayscaled.png", 'Lena_thresholded.png')
+        new_img_th = Image.fromarray(arr)
+        new_img_th.save(Path)
+        histogram(arr)
