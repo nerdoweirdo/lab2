@@ -63,23 +63,12 @@ def ranking(data):
 if __name__ == '__main__':
     Path = input("Input path to the file: ")
     flag = True
-    if (os.path.exists(Path) == False):
-        print("File does not exist.\n")
-    if re.search(r'\.csv$', Path):
-        flag = True
+    if (os.path.exists(Path) == False or re.search(r'\.csv$', Path) == False):
+        print("File does not exist or wrong extension.\n")
     else:
-        flag = False
-        while (flag == False):
-            print("Incorrect extension.\n")
-            Path = ''
-            Path = input("Try again: ")
-            if re.search(r'\.csv$', Path):
-                flag = True
-            else:
-                flag = False
-    global data
-    data = pd.read_csv(Path, sep=',')
-    genInfo(data)
-    regionInfo(data)
-    valuesBigger(data)
-    ranking(data)
+        global data
+        data = pd.read_csv(Path, sep=',')
+        genInfo(data)
+        regionInfo(data)
+        valuesBigger(data)
+        ranking(data)
