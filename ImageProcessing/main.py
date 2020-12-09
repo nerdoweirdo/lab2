@@ -32,27 +32,15 @@ def histogram(arr):
 if __name__ == '__main__':
     Path = input("Input path to the file: ")
     flag = True
-    if (os.path.exists(Path) == False):
-        print("File does not exist.\n")
+    if (os.path.exists(Path) == False or re.search(r'\.png$', Path) == False):
+        print("File does not exist or wrong extension.\n")
     else:
-        if re.search(r'\.png$', Path):
-            flag = True
-        else:
-            flag = False
-            while (flag == False):
-                print("Incorrect extension.\n")
-                Path = ''
-                Path = input("Try again: ")
-                if re.search(r'\.png$', Path):
-                    flag = True
-                else:
-                    flag = False
         arr = grayscale(Path)
-        Path = Path.replace("Lena.png", 'Lena_grayscaled.png')
+        Path = Path.replace(".png", '_grayscaled.png')
         new_img = Image.fromarray(arr)
         new_img.save(Path)
         arr = thresholded(arr)
-        Path = Path.replace("Lena_grayscaled.png", 'Lena_thresholded.png')
+        Path = Path.replace("_grayscaled.png", '_thresholded.png')
         new_img_th = Image.fromarray(arr)
         new_img_th.save(Path)
         histogram(arr)
